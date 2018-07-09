@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "jmeter-slave-ASG" {
   min_size             = "${var.slave_asg_size}"
   force_delete         = true
   launch_configuration = "${aws_launch_configuration.jmeter-slave-lc.name}"
-  vpc_zone_identifier  = "${var.subnet_ids}"
+  vpc_zone_identifier  = ["${var.subnet_ids}"]
 
   tag {
     key                 = "Name"
