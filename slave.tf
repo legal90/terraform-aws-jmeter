@@ -15,7 +15,7 @@ resource "aws_autoscaling_group" "jmeter-slave-ASG" {
 
 resource "aws_launch_configuration" "jmeter-slave-lc" {
   name_prefix   = "jmeter-slave-lc"
-  image_id      = "${lookup(var.aws_amis, var.aws_region)}"
+  image_id      = "${var.aws_ami}"
   instance_type = "${var.slave_instance_type}"
 
   user_data = <<EOF
@@ -29,8 +29,7 @@ tar zxvf /tmp/jMeter.tgz -C /opt/jmeter --strip-components=1
 nohup /opt/jmeter/bin/jmeter-server &
 EOF
 
-  # associate_public_ip_address = false
-  security_groups = ["${aws_security_group.jmeter-sg.id}"]
+  security_groups = ["${var.slave_vpc_security_group_ids}"]
   key_name        = "${aws_key_pair.jmeter-slave-keypair.key_name}"
 
   lifecycle {

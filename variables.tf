@@ -1,7 +1,10 @@
-variable "aws_region" {}
+variable "aws_ami" {
+  description = "ID of AMI to use for the instances. IMPORTANT: Currently only Amazon Linux is supported!"
+  default     = "ami-39d39d41"
+}
 
 variable "vpc_id" {
-  description = "VPC ID wher the cluster will be created"
+  description = "VPC ID where the cluster will be created"
 }
 
 variable "subnet_ids" {
@@ -9,10 +12,14 @@ variable "subnet_ids" {
   type        = "list"
 }
 
-variable "aws_amis" {
-  default = {
-    "us-west-2" = "ami-39d39d41"
-  }
+variable "master_vpc_security_group_ids" {
+  description = "A list of security group IDs to associate master instance with"
+  type        = "list"
+}
+
+variable "slave_vpc_security_group_ids" {
+  description = "A list of security group IDs to associate slave instances with"
+  type        = "list"
 }
 
 variable "slave_instance_type" {
